@@ -1,6 +1,7 @@
 import RollAuthentication from "./authentication";
 import RollUserAPI from "./user";
 import RollRequest from "./request";
+import config from "../config";
 
 const OAUTH_KEY = "oauthTokens";
 
@@ -17,28 +18,29 @@ const clearCachedOauthTokens = () => {
 };
 
 class RollAPI {
-  constructor(oauthConfig, authCacheConfig) {
+  constructor({ apiURL, oauthConfig, authCacheConfig }) {
     this.authentication = new RollAuthentication(oauthConfig, authCacheConfig);
-    const request = new RollRequest(
-      this.authentication.getAuthToken,
-      "https://api.sandbox.tryroll.com"
-    );
+    const request = new RollRequest(this.authentication.getAuthToken, apiURL);
     this.user = new RollUserAPI(this.authentication.getAuthToken, request);
   }
 }
 
-const clientID = "example";
-const issuerURL = "https://oauth.sandbox.tryroll.com/oauth2";
-const redirectURL = window.location.origin;
-const scopes = ["offline", "openid", "base", "read-tx", "write-tx"];
-
-const oauthConfig = { clientID, issuerURL, redirectURL, scopes };
+const oauthConfig = {
+  clientID: config.clientID,
+  issuerURL: config.issuerURL,
+  redirectURL: config.redirectURL,
+  scopes: config.scopes,
+};
 
 const authCacheConfig = {
   setCache: cacheOauthTokens,
   getCache: getCachedOauthTokens,
   clearCache: clearCachedOauthTokens,
 };
-const rollAPI = new RollAPI(oauthConfig, authCacheConfig);
+const rollAPI = new RollAPI({
+  apiURL: config.apiURL,
+  oauthConfig: oauthConfig,
+  authCacheConfig,
+});
 
 export default rollAPI;
