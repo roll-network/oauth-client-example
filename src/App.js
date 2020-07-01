@@ -4,6 +4,7 @@ import SessionManager, { SessionContext } from "./components/sessionManager";
 import HasBalance from "./features/hasBalance";
 import UserInfo from "./components/userInfo";
 import ThirdPartyProfiles from "./features/thirdPartyProfiles";
+import Transfer from "./features/transfer";
 
 import "./App.css";
 
@@ -26,6 +27,7 @@ const Content = () => {
           <UserInfo />
           <HasBalance />
           <ThirdPartyProfiles />
+          <Transfer />
         </>
       ) : null}
     </div>

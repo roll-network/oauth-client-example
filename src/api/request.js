@@ -6,13 +6,18 @@ export default class RollRequest {
     this.apiURL = apiURL;
   }
 
-  authenticated(endpoint, method) {
-    return this.executeRequest(endpoint, {
+  authenticated(endpoint, method, body) {
+    const options = {
       method,
       headers: {
         Authorization: this.getAuthToken(),
+        "Content-Type": "application/json",
       },
-    });
+    };
+
+    if (body) options.body = JSON.stringify(body);
+
+    return this.executeRequest(endpoint, options);
   }
 
   open(endpoint, method) {

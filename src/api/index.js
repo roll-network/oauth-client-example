@@ -1,6 +1,8 @@
 import RollAuthentication from "./authentication";
 import RollUserAPI from "./user";
 import RollRequest from "./request";
+import RollTransactionAPI from "./transaction";
+
 import config from "../config";
 
 const OAUTH_KEY = "oauthTokens";
@@ -22,6 +24,10 @@ class RollAPI {
     this.authentication = new RollAuthentication(oauthConfig, authCacheConfig);
     const request = new RollRequest(this.authentication.getAuthToken, apiURL);
     this.user = new RollUserAPI(this.authentication.getAuthToken, request);
+    this.transaction = new RollTransactionAPI(
+      this.authentication.getAuthToken,
+      request
+    );
   }
 }
 
