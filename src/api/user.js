@@ -8,10 +8,12 @@ export default class RollUserAPI {
     this.getThirdPartyProfiles = this.getThirdPartyProfiles.bind(this);
   }
 
+  // retrieve user data based on authToken
   getMe() {
     return this.request.authenticated("/v2/users/session", "GET");
   }
 
+  // check whether or not a user has a balance of a particular token. resolves to { hasbalance: boolean }
   hasBalance(userID, symbol, amount) {
     return this.request.authenticated(
       `/v1/users/${userID}/hasbalance/${symbol}/${amount}`,
@@ -19,6 +21,7 @@ export default class RollUserAPI {
     );
   }
 
+  // get information on which third party applications a user has connected to their roll account
   getThirdPartyProfiles(userID) {
     return this.request.authenticated(
       `/v1/users/${userID}/profile/thirdparties`,

@@ -6,6 +6,12 @@ export default class RollTransactionAPI {
     this.request = request;
   }
 
+  // send social money to a roll user
+  // amount must be converted using token decimals.
+  // Example:
+  // decimals = 4
+  // user input amount = 1.00
+  // converted amount = 10000
   internal(userID, symbol, amount, decimals, recipientUsername, message) {
     const form = {
       amount,
@@ -13,6 +19,7 @@ export default class RollTransactionAPI {
       toUser: recipientUsername,
       message,
       type: TRANSFER,
+      token: symbol,
     };
     const endpoint = `/v1/transactions`;
     return this.request.authenticated(endpoint, "POST", form);

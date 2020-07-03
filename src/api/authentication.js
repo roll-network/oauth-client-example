@@ -50,6 +50,8 @@ class RollAuthentication {
   }
 
   handleRefresh(onSuccess, onFail) {
+    // the code parameter found in the callback url is required to refresh an authToken
+    // the refresh token is required to refresh an authToken
     if (!this.exchangeCode || !this.refreshToken) {
       console.log("missing exchangeCode and refreshToken, aborting refresh");
       return;
@@ -57,6 +59,7 @@ class RollAuthentication {
 
     console.log("attempting to refresh tokens...");
 
+    // send a request to refresh the authToken with relevant parameters sent as query params
     fetch(`${this.issuerURL}/token`, {
       method: "POST",
       headers: {
@@ -71,15 +74,18 @@ class RollAuthentication {
       }),
     })
       .then((r) => r.json())
-      .then((oauthTokens) =>
+      .then((oauthTokens) => {
+        // use the handleTokenResponse function to store relevant params, check for errors, and handle success/error callbacks
         this.handleTokenResponse(oauthTokens, onSuccess, (e) => {
-          this.clearCache();
-          onFail(e);
-        })
-      )
+          this.clearCache(); // if the there is a non successful response, we must clear any cached token values.
+          onFail(e); // invoke on fail function passed in by class consumer
+        });
+      })
       .catch((err) => onFail(err));
   }
 
+  // build login url with state and nonce.
+  // the class consumer should navigate to this URL using their own implementation.
   getLoginURL() {
     const params = {
       client_id: this.clientID,
@@ -93,6 +99,8 @@ class RollAuthentication {
     return `${this.issuerURL}/auth?${toQueryParams(params)}`;
   }
 
+  // build logout url with redirect uri, state, and idToken
+  // the class consumer should navigate to this URL using their own implementation.
   getLogoutURL() {
     this.clearCache();
     const params = {
@@ -103,17 +111,22 @@ class RollAuthentication {
     return `${this.issuerURL}/sessions/logout?${toQueryParams(params)}`;
   }
 
+  // pass in the callback url containing the ?code= param
   initializeSession(url, onSuccess, onFail) {
     const urlParams = new URLSearchParams(window.location.search);
+
+    // if user already has an authToken, you are already logged in. Invoke the onSuccess function.
     if (this.authToken) {
       onSuccess();
       return;
     }
 
+    // validate that url contains the code param
     if (!urlParams.has("code")) {
       onSuccess("url does not contain the code parameter");
     }
 
+    // save exchange code
     this.exchangeCode = urlParams.get("code");
 
     fetch(`${this.issuerURL}/token`, {
@@ -129,12 +142,16 @@ class RollAuthentication {
       }),
     })
       .then((response) => response.json())
-      .then((oauthTokens) =>
-        this.handleTokenResponse(oauthTokens, onSuccess, onFail)
+      .then(
+        (oauthTokens) =>
+          this.handleTokenResponse(oauthTokens, onSuccess, onFail) // save relevant params, handle errors, and invoke custom success/error callbacks
       )
       .catch((err) => onFail(err));
   }
 
+  // common function to handle errors and map values from oauth authentication endpoints to the correct class values.
+  // invokes success/error callbacks
+  // sets timestamps every time user is authenticated
   handleTokenResponse = (oauthTokens, onSuccess, onFail) => {
     if (oauthTokens.error) {
       onFail(oauthTokens);
@@ -150,6 +167,7 @@ class RollAuthentication {
     }
   };
 
+  // serialize tokens and pass into custom caching function supplied by class consumer
   handleCacheTokens() {
     this.setCache(
       JSON.stringify({

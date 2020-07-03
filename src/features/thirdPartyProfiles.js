@@ -16,6 +16,7 @@ function ThirdPartyProfiles() {
   const session = React.useContext(SessionContext);
   const [profiles, setProfiles] = React.useState({ third_parties: {} });
 
+  // pass in the user's userID to get information on which third party applications have been connected to their roll account
   React.useEffect(() => {
     rollAPI.user
       .getThirdPartyProfiles(session.user.userID)

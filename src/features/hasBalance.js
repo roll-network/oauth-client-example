@@ -22,11 +22,14 @@ export default function HasBalance() {
 
     let n = Number(amount);
 
+    // user must provide a valid number to check balance
     if (isNaN(n)) {
       setErrMessage("please provide a valid number");
       return;
     }
 
+    // pass in the user's userID, the token symbol, and the amount.
+    // the amount does not need to be converted. The user input amount can be passed in directly (must be a number type)
     rollAPI.user
       .hasBalance(session.user.userID, symbol, amount)
       .then(({ hasbalance }) => setSuccessMessage(`has balance: ${hasbalance}`))
