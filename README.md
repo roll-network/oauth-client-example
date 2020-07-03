@@ -11,11 +11,11 @@ Modify the values in `src/config.js` to connect to your applications OAUTH clien
 
 ## Authentication example
 
-Check the `src/api/authentication file` for an example of authentication with Roll
+Check `src/api/authentication` for an example of authentication with Roll
 
 ## Session Manager
 
-the Session manager component found in `src/components/sessionManager` provides an example of initializing a roll session and refreshing authTokens with the RollAPI class example.
+the Session manager component found in `src/components/sessionManager` provides an example of initializing a roll session and refreshing authTokens with the RollAPI class.
 
 ## Features
 
