@@ -24,3 +24,6 @@ The feature folder contains examples of interacting with different Roll endpoint
 - user to user transactions (`transfer.js`)
 - check user balance (`hasBalance.js`)
 - check third party profiles (`thirdPartyProfiles.js`)
+
+## API Documentation
+https://docs.tryroll.com/
