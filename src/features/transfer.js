@@ -4,7 +4,7 @@ import Button from "../components/button";
 import rollAPI from "../api";
 
 // IMPORTANT - currently all roll production tokens have 4 decimals. Do not assume this in production. Use the decimal value of a particular token to perform any conversions.
-const TOKEN_DECIMALS = 3;
+const TOKEN_DECIMALS = 4;
 
 export default function Transfer() {
   const session = React.useContext(SessionContext);
