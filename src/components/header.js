@@ -2,13 +2,17 @@ import React from "react";
 import Button from "./button";
 import rollAPI from "../api";
 import { SessionContext } from "./sessionManager";
+import config from "../config";
+
+const isProduction = (url) => url.indexOf("api.tryroll.com") !== -1;
 
 const Header = () => {
   const session = React.useContext(SessionContext);
 
   return (
     <div className='header-container'>
-      <p>Roll OAUTH Example</p>
+      <h3>Roll OAUTH Example</h3>
+      {isProduction(config.apiURL) && <Warning />}
       {session.isLoggedIn ? <LogoutButton /> : <LoginButton />}
     </div>
   );
@@ -37,6 +41,17 @@ const LoginButton = () => {
       }}>
       Log In
     </Button>
+  );
+};
+
+const Warning = () => {
+  return (
+    <div className='warning-container'>
+      <p>
+        You are currently interacting with a production environment. Use at your
+        own risk.
+      </p>
+    </div>
   );
 };
 

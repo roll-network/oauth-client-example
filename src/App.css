@@ -20,6 +20,7 @@
   padding: 12px;
   padding-left: 24px;
   padding-right: 24px;
+  max-height: 50px;
 }
 
 .user-info-container {
@@ -54,4 +55,13 @@ input {
 
 .transfer-container {
   padding: 24px;
+}
+
+.warning-container {
+  border: 2px solid blue;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #696ff0;
+  color: white;
+  font-weight: bold;
 }
