@@ -10,7 +10,7 @@ export default class RollUserAPI {
 
   // retrieve user data based on authToken
   getMe() {
-    return this.request.authenticated("/v2/users/session", "GET");
+    return this.request.authenticated("/v3/users/session", "GET");
   }
 
   // check whether or not a user has a balance of a particular token. resolves to { hasbalance: boolean }
