@@ -12,16 +12,16 @@ export default class RollTransactionAPI {
   // decimals = 4
   // user input amount = 1.00
   // converted amount = 10000
-  internal(userID, symbol, amount, decimals, recipientUsername, message) {
+  internal(userID, symbol, amount, recipientUsername, message) {
     const form = {
       amount,
-      decimals,
       toUser: recipientUsername,
       message,
       type: TRANSFER,
-      token: symbol,
-    };
-    const endpoint = `/v1/transactions`;
+      symbol,
+      fromUser: userID,
+    }
+    const endpoint = `/v3/transactions`;
     return this.request.authenticated(endpoint, "POST", form);
   }
 }

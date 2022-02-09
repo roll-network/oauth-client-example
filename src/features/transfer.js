@@ -50,7 +50,7 @@ export default function Transfer() {
     }
 
     // multiply the user input number by 10^TOKEN_DECIMALS. round the result to account for potential JS floating point error
-    n = Math.round(n * 10 ** TOKEN_DECIMALS);
+    // n = Math.round(n * 10 ** TOKEN_DECIMALS);
 
     try {
       // pass in the user's userID, the token symbol, the converted amount to be sent, the token decimals, and the recipient username
@@ -59,7 +59,6 @@ export default function Transfer() {
         session.user.userID,
         inputs.symbol,
         n,
-        TOKEN_DECIMALS,
         inputs.username,
         "this was a third party transfer"
       );
