@@ -92,7 +92,7 @@ class RollAuthentication {
       redirect_uri: this.redirectURL,
       scopes: this.scopes,
       response_type: "code",
-      response_mode: "form_post",
+      response_mode: "query",
       state: crypto.getRandomValues(new Uint8Array(4)).join(""),
       nonce: crypto.getRandomValues(new Uint8Array(4)).join(""),
     };
