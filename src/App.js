@@ -1,36 +1,42 @@
 import React from "react";
-import Header from "./components/header";
+import { TryrollProvider, injectFonts } from "@tryrolljs/design-system";
+import TopNavigation from "./components/topNavigation";
 import SessionManager, { SessionContext } from "./components/sessionManager";
 import HasBalance from "./features/hasBalance";
 import UserInfo from "./components/userInfo";
 import ThirdPartyProfiles from "./features/thirdPartyProfiles";
 import Transfer from "./features/transfer";
+import LoggedOut from "./components/loggedOut";
 
-import "./App.css";
+injectFonts();
 
 function App() {
   return (
-    <SessionManager>
-      <Content />
-    </SessionManager>
+    <TryrollProvider>
+      <SessionManager>
+        <Entrypoint />
+      </SessionManager>
+    </TryrollProvider>
   );
 }
 
-const Content = () => {
+const Entrypoint = () => {
   const session = React.useContext(SessionContext);
 
   return (
-    <div className='App'>
-      <Header />
-      {session.isLoggedIn ? (
+    <>
+      <TopNavigation />
+      {session.user ? (
         <>
           <UserInfo />
           <HasBalance />
           <ThirdPartyProfiles />
           <Transfer />
         </>
-      ) : null}
-    </div>
+      ) : (
+        <LoggedOut />
+      )}
+    </>
   );
 };
 

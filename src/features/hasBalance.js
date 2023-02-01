@@ -1,6 +1,13 @@
+import { user } from "@tryrolljs/api";
+import {
+  Button,
+  Input,
+  Header,
+  Result,
+  Caption,
+} from "@tryrolljs/design-system";
 import React from "react";
-import rollAPI from "../api";
-import Button from "../components/button";
+import { apiClient } from "../api";
 import { SessionContext } from "../components/sessionManager";
 
 export default function HasBalance() {
@@ -11,57 +18,69 @@ export default function HasBalance() {
     symbol: "",
   });
 
-  const [errMessage, setErrMessage] = React.useState("");
-
-  const [successMessage, setSuccessMessage] = React.useState("");
+  const [validationError, setValidationError] = React.useState();
+  const [error, setError] = React.useState();
+  const [response, setResponse] = React.useState();
 
   const handleSubmit = (e) => {
-    const { amount, symbol } = inputState;
+    setError(undefined);
+    setValidationError(undefined);
 
-    setErrMessage("");
-
-    let n = Number(amount);
+    let amount = Number(inputState.amount);
 
     // user must provide a valid number to check balance
-    if (isNaN(n)) {
-      setErrMessage("please provide a valid number");
+    if (isNaN(amount)) {
+      setValidationError("please provide a valid number");
       return;
     }
 
     // pass in the user's userID, the token symbol, and the amount.
     // the amount does not need to be converted. The user input amount can be passed in directly (must be a number type)
-    rollAPI.user
-      .hasBalance(session.user.userID, symbol, amount)
-      .then(({ hasbalance }) => setSuccessMessage(`has balance: ${hasbalance}`))
-      .catch((err) => setErrMessage(err.message));
+    user
+      .hasBalance(
+        { userId: session.user.userID, symbol: inputState.symbol, amount },
+        apiClient
+      )
+      .then((response_) => setResponse(response_))
+      .catch((e) => setError(e));
   };
 
   return (
-    <div className='has-balance-container'>
-      <div>
-        <h3>Check user balance</h3>
-        <p>Returns true or false</p>
-        <input
-          placeholder='amount'
-          value={inputState.amount}
-          onChange={(e) =>
-            setInputState({ ...inputState, amount: e.target.value })
+    <div style={{ padding: 16 }}>
+      <Header>Check if user has amount of a token</Header>
+      <br />
+      <br />
+      <Input
+        placeholder="Amount"
+        value={inputState.amount}
+        onChange={(e) =>
+          setInputState({ ...inputState, amount: e.target.value })
+        }
+      />
+      <br />
+      <Input
+        placeholder="Symbol"
+        value={inputState.symbol}
+        onChange={(e) =>
+          setInputState({
+            ...inputState,
+            symbol: e.target.value.toUpperCase(),
+          })
+        }
+      />
+      {validationError && <Caption color="red">{validationError}</Caption>}
+      <br />
+      {(response || error) && (
+        <Result
+          variant={error ? "error" : "success"}
+          title={error ? "Something went wrong" : "Successful response"}
+          description={
+            error ? error.message : response.hasbalance.toString().toUpperCase()
           }
         />
-        <input
-          placeholder='symbol'
-          value={inputState.symbol}
-          onChange={(e) =>
-            setInputState({
-              ...inputState,
-              symbol: e.target.value.toUpperCase(),
-            })
-          }
-        />
-        <Button onClick={handleSubmit}>Submit</Button>
-      </div>
-      <p>{errMessage}</p>
-      <p>{successMessage}</p>
+      )}
+      <br />
+      <Button title="Submit" onPress={handleSubmit} />
     </div>
   );
 }

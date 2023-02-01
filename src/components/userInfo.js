@@ -1,3 +1,4 @@
+import { Body, Information, padding } from "@tryrolljs/design-system";
 import React from "react";
 import { SessionContext } from "./sessionManager";
 
@@ -10,12 +11,19 @@ export default function UserInfo() {
       : "";
 
   return (
-    <div className='user-info-container'>
-      <img src={pic} alt='roll-user-profile-pic' className='profile-pic' />
-      <div>
-        <p>username: {`${session.user.username}`}</p>
-        <p>name: {`${session.user.name}`}</p>
-      </div>
+    <div style={{ maxWidth: "100%", width: 200, padding: 16 }}>
+      <Information>
+        <Information.Item
+          key="username"
+          label="Username"
+          value={<Body>{session.user.username}</Body>}
+        />
+        <Information.Item
+          key="name"
+          label="Name"
+          value={<Body>{session.user.name}</Body>}
+        />
+      </Information>
     </div>
   );
 }
