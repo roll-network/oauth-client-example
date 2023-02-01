@@ -4512,7 +4512,7 @@
     type-fest "^3.1.0"
     wagmi "^0.10.6"
 
-"@tryrolljs/sdk@^0.1.2":
+"@tryrolljs/sdk@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@tryrolljs/sdk/-/sdk-0.1.3.tgz#23bb8020028d2f59476b31e68655d0a87b4ff6a3"
   integrity sha512-q7caKUBoA6Hc7eDQQbBQO94ZYez1FrLfFhp4TdYX2aqkjxkOsE00o9OYJSCwQkKOHqageoUul7apkkcL/nILSA==
