@@ -1,9 +1,9 @@
-import { Body, CircleImg, Information } from "@tryrolljs/design-system";
 import React from "react";
-import { SessionContext } from "./sessionManager";
+import { Body, CircleImg, Information } from "@tryrolljs/design-system";
+import { useSession } from "@tryrolljs/session-manager";
 
 export default function UserInfo() {
-  const session = React.useContext(SessionContext);
+  const session = useSession();
 
   const userImage =
     session.user.media && session.user.media[0]

@@ -1,4 +1,6 @@
+import React from "react";
 import { user } from "@tryrolljs/api";
+import { useSession } from "@tryrolljs/session-manager";
 import {
   Button,
   Input,
@@ -6,12 +8,10 @@ import {
   Result,
   Caption,
 } from "@tryrolljs/design-system";
-import React from "react";
 import { apiClient } from "../api";
-import { SessionContext } from "../components/sessionManager";
 
 export default function HasBalance() {
-  const session = React.useContext(SessionContext);
+  const session = useSession();
 
   const [inputState, setInputState] = React.useState({
     amount: "",

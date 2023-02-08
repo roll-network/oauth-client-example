@@ -7,14 +7,14 @@ import {
   Result,
 } from "@tryrolljs/design-system";
 import { transaction } from "@tryrolljs/api";
-import { SessionContext } from "../components/sessionManager";
+import { useSession } from "@tryrolljs/session-manager";
 import { apiClient } from "../api";
 
 // IMPORTANT - currently all roll production tokens have 4 decimals. Do not assume this in production. Use the decimal value of a particular token to perform any conversions.
 // const TOKEN_DECIMALS = 4;
 
 export default function Transfer() {
-  const session = React.useContext(SessionContext);
+  const session = useSession();
 
   const [inputState, setInputState] = React.useState({
     symbol: "",

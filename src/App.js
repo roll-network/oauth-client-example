@@ -1,19 +1,20 @@
 import React from "react";
 import { TryrollProvider, injectFonts } from "@tryrolljs/design-system";
+import SessionManager, { useSession } from "@tryrolljs/session-manager";
 import TopNavigation from "./components/topNavigation";
-import SessionManager, { SessionContext } from "./components/sessionManager";
 import HasBalance from "./features/hasBalance";
 import UserInfo from "./components/userInfo";
 import ThirdPartyProfiles from "./features/thirdPartyProfiles";
 import Transfer from "./features/transfer";
 import LoggedOut from "./components/loggedOut";
+import { apiClient, authSdk } from "./api";
 
 injectFonts();
 
 function App() {
   return (
     <TryrollProvider>
-      <SessionManager>
+      <SessionManager apiClient={apiClient} authSdk={authSdk}>
         <Entrypoint />
       </SessionManager>
     </TryrollProvider>
@@ -21,7 +22,7 @@ function App() {
 }
 
 const Entrypoint = () => {
-  const session = React.useContext(SessionContext);
+  const session = useSession();
 
   return (
     <>

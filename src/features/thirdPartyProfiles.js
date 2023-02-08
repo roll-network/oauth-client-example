@@ -1,8 +1,8 @@
+import React from "react";
 import { user } from "@tryrolljs/api";
 import { Body, Header, Result, SubHeader } from "@tryrolljs/design-system";
-import React from "react";
+import { useSession } from "@tryrolljs/session-manager";
 import { apiClient } from "../api";
-import { SessionContext } from "../components/sessionManager";
 
 function ThirdParty({ serviceName, info }) {
   return (
@@ -15,7 +15,7 @@ function ThirdParty({ serviceName, info }) {
 }
 
 function ThirdPartyProfiles() {
-  const session = React.useContext(SessionContext);
+  const session = useSession();
   const [profiles, setProfiles] = React.useState({ third_parties: {} });
   const [error, setError] = React.useState();
 

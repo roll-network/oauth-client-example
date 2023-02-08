@@ -6,13 +6,13 @@ import {
   padding,
   Surface,
 } from "@tryrolljs/design-system";
-import { SessionContext } from "./sessionManager";
+import { useSession } from "@tryrolljs/session-manager";
 import config from "../config";
 
 const isProduction = (url) => url.indexOf("api.tryroll.com") !== -1;
 
 const TopNavigation = () => {
-  const session = React.useContext(SessionContext);
+  const session = useSession();
 
   return (
     <React.Fragment>
