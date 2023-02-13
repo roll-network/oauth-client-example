@@ -4,20 +4,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ethersproject/providers": "^5.4.5",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@tryrolljs/api": "^0.2.1",
+    "@tryrolljs/api-client": "^0.0.3",
+    "@tryrolljs/design-system": "0.2.1",
+    "@tryrolljs/sdk": "^0.2.1",
+    "@tryrolljs/session-manager": "^1.0.2",
+    "@web3-react/core": "^6.0.9",
+    "@web3-react/fortmatic-connector": "^6.1.6",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/network-connector": "^6.2.9",
+    "@web3-react/portis-connector": "^6.2.11",
+    "@web3-react/walletconnect-connector": "^6.2.10",
     "gh-pages": "^3.1.0",
     "moment": "^2.29.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.0"
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-native": "0.70.3",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-svg": "^12.1.1",
+    "react-native-web": "^0.17.7",
+    "react-scripts": "^5.0.0",
+    "util": "^0.12.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -38,7 +55,9 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@craco/craco": "^7.0.0"
+  },
   "author": "",
   "license": "ISC"
 }
